@@ -23,8 +23,9 @@ resource "azurerm_container_group" "master" {
         var.locustWorkerNodes,
         "--host",
         var.locustTargetUrl,
-        "--html",
-        "/home/locust/locust/${uuid()}.html",
+        "--csv",
+        uuid(),
+        "--csv-full-history"
         "--users",
         var.locustNumUsers,
         "--spawn-rate",
