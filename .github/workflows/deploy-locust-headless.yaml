@@ -71,7 +71,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -input=false -out=tf_plan -var "locustSpawnRate=$locustSpawnRate" -var "locustRunTime=$locustRunTime" -var "locustNumUsers=$locustNumUsers" -var "locustTargetUrl=$locustTargetUrl" -var "prefix=$PREFIX" -var="locustWorkerNodes=$locustWorkerNodes"
+      run: terraform plan -input=false -out=tf_plan -var "githubRunId=$GITHUB_RUN_ID" -var "locustSpawnRate=$locustSpawnRate" -var "locustRunTime=$locustRunTime" -var "locustNumUsers=$locustNumUsers" -var "locustTargetUrl=$locustTargetUrl" -var "prefix=$PREFIX" -var="locustWorkerNodes=$locustWorkerNodes"
       continue-on-error: false
 
     - name: Terraform Apply
@@ -86,7 +86,7 @@ jobs:
 
     - name: "Terraform Plan - scale down"
       id: plan-scale-down
-      run: terraform plan -input=false -out=tf_plan -var "locustSpawnRate=$locustSpawnRate" -var "locustRunTime=$locustRunTime" -var "locustNumUsers=$locustNumUsers" -var "locustTargetUrl=$locustTargetUrl" -var "prefix=$PREFIX" -var="locustWorkerNodes=0"
+      run: terraform plan -input=false -out=tf_plan -var "githubRunId=$GITHUB_RUN_ID" -var "locustSpawnRate=$locustSpawnRate" -var "locustRunTime=$locustRunTime" -var "locustNumUsers=$locustNumUsers" -var "locustTargetUrl=$locustTargetUrl" -var "prefix=$PREFIX" -var="locustWorkerNodes=0"
       continue-on-error: false
 
     - name: "Terraform Apply - scale down"
