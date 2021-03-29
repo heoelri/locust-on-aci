@@ -17,7 +17,7 @@ resource "azurerm_storage_share" "locust" {
 resource "azurerm_storage_share_directory" "locust-logs" {
   name                 = "logs"
   share_name           = azurerm_storage_share.locust.name
-  storage_account_name = azurerm_storage_account.locust.name
+  storage_account_name = azurerm_storage_account.deployment.name
 }
 
 resource "azurerm_storage_share_file" "locustfile" {
