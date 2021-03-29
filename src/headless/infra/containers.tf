@@ -30,7 +30,10 @@ resource "azurerm_container_group" "master" {
         "--spawn-rate",
         var.locustSpawnRate,
         "--run-time",
-        "${var.locustRunTime}m"
+        "${var.locustRunTime}m",
+        "--print-stats",
+        "--logfile",
+        "/home/locust/locust/logs/${uuid()}.log"
     ]
 
     volume {
