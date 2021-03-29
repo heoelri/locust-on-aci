@@ -20,10 +20,10 @@ defaults:
     working-directory: 'src/locust/infra'
 
 env:
-  ARM_CLIENT_ID:       ${{secrets.ARM_CLIENT_ID}}
-  ARM_CLIENT_SECRET:   ${{secrets.ARM_CLIENT_SECRET}}
-  ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
-  ARM_TENANT_ID:       ${{secrets.ARM_TENANT_ID}}
+  ARM_CLIENT_ID:       ${{secrets.TF_ARM_CLIENT_ID}}
+  ARM_CLIENT_SECRET:   ${{secrets.TF_ARM_CLIENT_SECRET}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.TF_ARM_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID:       ${{secrets.TF_ARM_TENANT_ID}}
   LOCUST_WORKER_NODES: ${{github.event.inputs.numberOfWorkerNodes}}
   PREFIX:              ${{github.event.inputs.envPrefix}} # must not contain any special characters. Must not be longer than 10 characters.
 
