@@ -24,7 +24,7 @@ resource "azurerm_container_group" "master" {
         "--host",
         var.locustTargetUrl,
         "--csv",
-        "locust/stats/${random_uuid.runUuid.result}",
+        "locust/stats/${var.githubRunId}",
         "--csv-full-history",
         "--users",
         var.locustNumUsers,
@@ -33,7 +33,7 @@ resource "azurerm_container_group" "master" {
         "--run-time",
         "${var.locustRunTime}m",
         "--logfile",
-        "/home/locust/locust/logs/${random_uuid.runUuid.result}.log"
+        "/home/locust/locust/logs/${var.githubRunId}.log"
     ]
 
     volume {
@@ -58,7 +58,7 @@ resource "azurerm_container_group" "master" {
 resource "azurerm_container_group" "worker" {
   count               = var.locustWorkerNodes
   name                = "${random_pet.deployment.id}-locust-worker-${count.index}"
-  location            = var.locust_worker_locations[count.index % length(var.locust_worker_locations)]
+  location            = var.locustWorkerLocations[count.index % length(var.locust_worker_locations)]
   resource_group_name = azurerm_resource_group.deployment.name
   ip_address_type     = "Public"
   os_type             = "Linux"

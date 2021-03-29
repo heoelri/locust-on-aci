@@ -46,10 +46,16 @@ variable "locustWorkerNodes" {
   default     = "0"
 }
 
-variable "locust_worker_locations" {
+variable "locustWorkerLocations" {
   description = "List of regions to deploy workers to in round robin fashion"
   type        = list
   default     = ["northeurope", "eastus2", "westeurope", "westus", "australiaeast", "francecentral", "southcentralus", "japaneast", "southindia", "brazilsouth", "germanywestcentral", "uksouth", "canadacentral", "eastus2", "uaenorth"]
+}
+
+variable "githubRunId" {
+  description = "GitHub Run ID"
+  type        = string
+  default     = "0"
 }
 
 variable "prefix" {
