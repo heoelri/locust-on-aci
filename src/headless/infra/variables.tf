@@ -40,7 +40,7 @@ variable "locustRunTime" {
   default     = "0"
 }
 
-variable "locust_workers" {
+variable "locustWorkerNodes" {
   description = "Number of Locust worker instances (zero will stop master)"
   type        = string
   default     = "0"

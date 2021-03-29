@@ -22,7 +22,7 @@ variable "targeturl" {
   default     = "https://my-sample-app.net"
 }
 
-variable "locust_workers" {
+variable "locustWorkerNodes" {
   description = "Number of Locust worker instances (zero will stop master)"
   type        = string
   default     = "0"
