@@ -80,11 +80,11 @@ jobs:
         time: '${{github.event.inputs.locustRunTime}}m'
 
     - name: "Terraform Plan - scale down"
-      id: plan
+      id: plan-scale-down
       run: terraform plan -input=false -out=tf_plan -var "locustSpawnRate=$locustSpawnRate" -var "locustRunTime=$locustRunTime" -var "locustNumUsers=$locustNumUsers" -var "prefix=$PREFIX" -var="locust_workers=0"
       continue-on-error: false
 
     - name: "Terraform Apply - scale down"
-      id: apply
+      id: apply-scale-down
       run: terraform apply -auto-approve tf_plan
       continue-on-error: false
