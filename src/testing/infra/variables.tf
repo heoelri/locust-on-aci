@@ -13,7 +13,7 @@ variable "environment" {
 variable "locust_version" {
   description = "Locust Container Image Version"
   type        = string
-  default     = "locustio/locust:1.3.0"
+  default     = "locustio/locust:1.4.3"
 }
 
 variable "targeturl" {
