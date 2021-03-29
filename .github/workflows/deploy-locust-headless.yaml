@@ -44,6 +44,7 @@ env:
   locustRunTime:       ${{github.event.inputs.locustRunTime}}
   locustNumUsers:      ${{github.event.inputs.locustNumUsers}}
   locustWorkerNodes:   ${{github.event.inputs.numberOfWorkerNodes}}
+  locustTargetUrl:     ${{github.event.inputs.locustTargetUrl}}
   PREFIX:              ${{github.event.inputs.envPrefix}} # must not contain any special characters. Must not be longer than 10 characters.
 
 jobs:
