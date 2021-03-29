@@ -32,7 +32,7 @@ resource "random_pet" "deployment" {
 }
 
 resource "azurerm_resource_group" "deployment" {
-  name     = "${var.prefix}-locust-rg"
+  name     = "locust-${var.prefix}-rg"
   location = var.location
   tags     = local.default_tags
 }
