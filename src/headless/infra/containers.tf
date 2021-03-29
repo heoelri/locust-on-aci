@@ -19,7 +19,7 @@ resource "azurerm_container_group" "master" {
         "/home/locust/locust/${azurerm_storage_share_file.locustfile.name}",
         "--master",
         "--headless", # running headless
-        "--expected-workers",
+        "--expect-workers",
         var.locustWorkerNodes,
         "--host",
         var.locustTargetUrl,
