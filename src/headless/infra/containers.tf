@@ -1,5 +1,5 @@
 resource "azurerm_container_group" "master" {
-  count               = var.locust_workers >= 1 ? 1 : 0
+  count               = var.locustWorkerNodes >= 1 ? 1 : 0
   name                = "${random_pet.deployment.id}-locust-master"
   location            = azurerm_resource_group.deployment.location
   resource_group_name = azurerm_resource_group.deployment.name
@@ -20,7 +20,7 @@ resource "azurerm_container_group" "master" {
         "--master",
         "--headless", # running headless
         "--expected-workers",
-        var.locust_workers,
+        var.locustWorkerNodes,
         "--host",
         var.targeturl,
         "--html",
@@ -53,7 +53,7 @@ resource "azurerm_container_group" "master" {
 }
 
 resource "azurerm_container_group" "worker" {
-  count               = var.locust_workers
+  count               = var.locustWorkerNodes
   name                = "${random_pet.deployment.id}-locust-worker-${count.index}"
   location            = var.locust_worker_locations[count.index % length(var.locust_worker_locations)]
   resource_group_name = azurerm_resource_group.deployment.name

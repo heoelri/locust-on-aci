@@ -13,7 +13,7 @@ on:
       envPrefix:
         description: 'environment prefix must not contain any special characters. Must not be longer than 10 characters. Must be all lowercase'
         required: true
-        default: 'locust'
+        default: 'webui'
 
 defaults:
   run:
@@ -24,7 +24,7 @@ env:
   ARM_CLIENT_SECRET:   ${{secrets.TF_ARM_CLIENT_SECRET}}
   ARM_SUBSCRIPTION_ID: ${{secrets.TF_ARM_SUBSCRIPTION_ID}}
   ARM_TENANT_ID:       ${{secrets.TF_ARM_TENANT_ID}}
-  LOCUST_WORKER_NODES: ${{github.event.inputs.numberOfWorkerNodes}}
+  locustWorkerNodes:   ${{github.event.inputs.numberOfWorkerNodes}}
   PREFIX:              ${{github.event.inputs.envPrefix}} # must not contain any special characters. Must not be longer than 10 characters.
 
 jobs:
@@ -51,7 +51,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -input=false -out=tf_plan -var "prefix=$PREFIX" -var="locust_workers=$LOCUST_WORKER_NODES"
+      run: terraform plan -input=false -out=tf_plan -var "prefix=$PREFIX" -var="locustWorkerNodes=$locustWorkerNodes"
       continue-on-error: false
 
     - name: Terraform Apply

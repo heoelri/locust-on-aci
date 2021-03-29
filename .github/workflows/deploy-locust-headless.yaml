@@ -25,7 +25,7 @@ on:
       envPrefix:
         description: 'environment prefix must not contain any special characters. Must not be longer than 10 characters. Must be all lowercase'
         required: true
-        default: 'locust'
+        default: 'headless'
 
 defaults:
   run:
@@ -39,7 +39,7 @@ env:
   locustSpawnRate:     ${{github.event.inputs.locustSpawnRate}}
   locustRunTime:       ${{github.event.inputs.locustRunTime}}
   locustNumUsers:      ${{github.event.inputs.locustNumUsers}}
-  LOCUST_WORKER_NODES: ${{github.event.inputs.numberOfWorkerNodes}}
+  locustWorkerNodes:   ${{github.event.inputs.numberOfWorkerNodes}}
   PREFIX:              ${{github.event.inputs.envPrefix}} # must not contain any special characters. Must not be longer than 10 characters.
 
 jobs:
@@ -66,7 +66,7 @@ jobs:
 
     - name: Terraform Plan
       id: plan
-      run: terraform plan -input=false -out=tf_plan -var "locustSpawnRate=$locustSpawnRate" -var "locustRunTime=$locustRunTime" -var "locustNumUsers=$locustNumUsers" -var "prefix=$PREFIX" -var="locust_workers=$LOCUST_WORKER_NODES"
+      run: terraform plan -input=false -out=tf_plan -var "locustSpawnRate=$locustSpawnRate" -var "locustRunTime=$locustRunTime" -var "locustNumUsers=$locustNumUsers" -var "prefix=$PREFIX" -var="locustWorkerNodes=$locustWorkerNodes"
       continue-on-error: false
 
     - name: Terraform Apply
@@ -81,7 +81,7 @@ jobs:
 
     - name: "Terraform Plan - scale down"
       id: plan-scale-down
-      run: terraform plan -input=false -out=tf_plan -var "locustSpawnRate=$locustSpawnRate" -var "locustRunTime=$locustRunTime" -var "locustNumUsers=$locustNumUsers" -var "prefix=$PREFIX" -var="locust_workers=0"
+      run: terraform plan -input=false -out=tf_plan -var "locustSpawnRate=$locustSpawnRate" -var "locustRunTime=$locustRunTime" -var "locustNumUsers=$locustNumUsers" -var "prefix=$PREFIX" -var="locustWorkerNodes=0"
       continue-on-error: false
 
     - name: "Terraform Apply - scale down"
