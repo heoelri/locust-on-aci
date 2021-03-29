@@ -29,7 +29,7 @@ on:
 
 defaults:
   run:
-    working-directory: 'src/locust/infra'
+    working-directory: 'src/headless/infra'
 
 env:
   ARM_CLIENT_ID:       ${{secrets.TF_ARM_CLIENT_ID}}
