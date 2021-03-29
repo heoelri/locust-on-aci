@@ -16,12 +16,6 @@ variable "locust_version" {
   default     = "locustio/locust:1.3.0"
 }
 
-variable "targeturl" {
-  description = "Target URL"
-  type        = string
-  default     = "https://my-sample-app.net"
-}
-
 variable "locustSpawnRate" {
   description = "Locust - The rate per second in which users are spawned."
   type        = string
@@ -38,6 +32,12 @@ variable "locustRunTime" {
   description = "Locust - Duration in Minutes."
   type        = string
   default     = "0"
+}
+
+variable "locustTargetUrl" {
+  description = "Locust - Target Website URL."
+  type        = string
+  default     = "https://my-sample-web.app"
 }
 
 variable "locustWorkerNodes" {
