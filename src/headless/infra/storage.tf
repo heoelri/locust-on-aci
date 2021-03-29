@@ -14,6 +14,12 @@ resource "azurerm_storage_share" "locust" {
   quota                = 50
 }
 
+resource "azurerm_storage_share_directory" "locust-logs" {
+  name                 = "logs"
+  share_name           = azurerm_storage_share.locust.name
+  storage_account_name = azurerm_storage_account.locust.name
+}
+
 resource "azurerm_storage_share_file" "locustfile" {
   name             = "locustfile.py"
   storage_share_id = azurerm_storage_share.locust.id
