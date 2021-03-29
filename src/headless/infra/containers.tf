@@ -17,14 +17,14 @@ resource "azurerm_container_group" "master" {
         "locust",
         "--locustfile",
         "/home/locust/locust/${azurerm_storage_share_file.locustfile.name}",
-        "--master",
+        "--master", 
         "--headless", # running headless
         "--expect-workers",
         var.locustWorkerNodes,
         "--host",
         var.locustTargetUrl,
         "--csv",
-        "locust/stats/${var.runUuid}",
+        "locust/stats/${random_uuid.runUuid}",
         "--csv-full-history",
         "--users",
         var.locustNumUsers,
@@ -33,7 +33,7 @@ resource "azurerm_container_group" "master" {
         "--run-time",
         "${var.locustRunTime}m",
         "--logfile",
-        "/home/locust/locust/logs/${var.runUuid}.log"
+        "/home/locust/locust/logs/${random_uuid.runUuid}.log"
     ]
 
     volume {

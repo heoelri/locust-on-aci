@@ -31,6 +31,9 @@ resource "random_pet" "deployment" {
   }
 }
 
+resource "random_uuid" "runUuid" {
+}
+
 resource "azurerm_resource_group" "deployment" {
   name     = "locust-${var.prefix}-rg"
   location = var.location
