@@ -25,7 +25,7 @@ resource "azurerm_container_group" "master" {
         var.locustTargetUrl,
         "--csv",
         uuid(),
-        "--csv-full-history"
+        "--csv-full-history",
         "--users",
         var.locustNumUsers,
         "--spawn-rate",
