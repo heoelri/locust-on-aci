@@ -82,7 +82,7 @@ jobs:
     - name: Sleep for ${{github.event.inputs.locustRunTime}} minutes
       uses: jakejarvis/wait-action@master
       with:
-        time: '${{github.event.inputs.locustRunTime+1}}m'
+        time: '${{github.event.inputs.locustRunTime}}m'
 
     - name: "Terraform Plan - scale down"
       id: plan-scale-down
