@@ -52,6 +52,12 @@ variable "locust_worker_locations" {
   default     = ["northeurope", "eastus2", "westeurope", "westus", "australiaeast", "francecentral", "southcentralus", "japaneast", "southindia", "brazilsouth", "germanywestcentral", "uksouth", "canadacentral", "eastus2", "uaenorth"]
 }
 
+variable "runUuid" {
+  description = "runUuid"
+  type        = string
+  default     = uuid()
+}
+
 variable "prefix" {
   description = "A prefix used for all resources in this example. Must not contain any special characters. Must not be longer than 10 characters."
   type        = string
