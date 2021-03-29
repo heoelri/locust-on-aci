@@ -22,7 +22,7 @@ resource "azurerm_container_group" "master" {
         "--expected-workers",
         var.locustWorkerNodes,
         "--host",
-        var.targeturl,
+        var.locustTargetUrl,
         "--html",
         "/home/locust/locust/${uuid()}.html",
         "--users",
