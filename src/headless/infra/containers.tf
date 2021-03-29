@@ -24,7 +24,7 @@ resource "azurerm_container_group" "master" {
         "--host",
         var.locustTargetUrl,
         "--csv",
-        uuid(),
+        "stats/${uuid()}",
         "--csv-full-history",
         "--users",
         var.locustNumUsers,
@@ -32,7 +32,6 @@ resource "azurerm_container_group" "master" {
         var.locustSpawnRate,
         "--run-time",
         "${var.locustRunTime}m",
-        "--print-stats",
         "--logfile",
         "/home/locust/locust/logs/${uuid()}.log"
     ]
