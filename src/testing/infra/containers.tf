@@ -18,19 +18,10 @@ resource "azurerm_container_group" "master" {
         "--locustfile",
         "/home/locust/locust/${azurerm_storage_share_file.locustfile.name}",
         "--master",
-        "--headless", # running headless
-        "--expected-workers",
-        var.locust_workers,
+        "--web-auth",
+        "locust:${azurerm_key_vault_secret.locustsecret.value}",
         "--host",
-        var.targeturl,
-        "--html",
-        "/home/locust/locust/${uuid()}.html",
-        "--users",
-        var.locustNumUsers,
-        "--spawn-rate",
-        var.locustSpawnRate,
-        "--run-time",
-        "${var.locustRunRime}m"
+        var.targeturl
     ]
 
     volume {
@@ -40,6 +31,11 @@ resource "azurerm_container_group" "master" {
         storage_account_key  = azurerm_storage_account.deployment.primary_access_key
         storage_account_name = azurerm_storage_account.deployment.name
         share_name           = azurerm_storage_share.locust.name
+    }
+
+    ports {
+      port     = "8089"
+      protocol = "TCP" 
     }
 
     ports {

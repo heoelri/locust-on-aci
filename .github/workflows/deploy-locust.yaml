@@ -1,0 +1,60 @@
+
+# Deploy Infrastructure via Terraform
+# https://docs.github.com/en/actions/reference/workflow-syntax-for-github-actions
+name: 'Deploy Locust'
+
+on:
+  workflow_dispatch:
+    inputs:
+      numberOfWorkerNodes:
+        description: 'Number of Locust worker nodes (0 stops master)'
+        required: true
+        default: '0'
+      envPrefix:
+        description: 'environment prefix must not contain any special characters. Must not be longer than 10 characters. Must be all lowercase'
+        required: true
+        default: 'locust'
+
+defaults:
+  run:
+    working-directory: 'src/locust/infra'
+
+env:
+  ARM_CLIENT_ID:       ${{secrets.ARM_CLIENT_ID}}
+  ARM_CLIENT_SECRET:   ${{secrets.ARM_CLIENT_SECRET}}
+  ARM_SUBSCRIPTION_ID: ${{secrets.ARM_SUBSCRIPTION_ID}}
+  ARM_TENANT_ID:       ${{secrets.ARM_TENANT_ID}}
+  LOCUST_WORKER_NODES: ${{github.event.inputs.numberOfWorkerNodes}}
+  PREFIX:              ${{github.event.inputs.envPrefix}} # must not contain any special characters. Must not be longer than 10 characters.
+
+jobs:
+
+  terraform-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+    - uses: hashicorp/setup-terraform@v1
+
+    - name: Terraform fmt
+      id: fmt
+      run: terraform fmt -list -diff #-check 
+      continue-on-error: true
+
+    - name: Terraform Init
+      id: init
+      run: terraform init -backend-config="resource_group_name=${{secrets.TF_STORAGE_ACCOUNT_RESOURCE_GROUP_NAME}}" -backend-config="storage_account_name=${{secrets.TF_STORAGE_ACCOUNT_NAME}}" -backend-config="container_name=${{secrets.TF_STORAGE_CONTAINER_NAME}}" -backend-config="key=githubaction.locust.terraform.tfstate"
+
+    - name: Terraform Validate
+      id: validate
+      run: terraform validate
+
+    - name: Terraform Plan
+      id: plan
+      run: terraform plan -input=false -out=tf_plan -var "prefix=$PREFIX" -var="locust_workers=$LOCUST_WORKER_NODES"
+      continue-on-error: false
+
+    - name: Terraform Apply
+      id: apply
+      run: terraform apply -auto-approve tf_plan
+      continue-on-error: false
