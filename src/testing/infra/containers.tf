@@ -9,7 +9,7 @@ resource "azurerm_container_group" "master" {
 
   container {
     name   = "${random_pet.deployment.id}-locust-master"
-    image  = var.locust_version
+    image  = var.locustVersion
     cpu    = "2"
     memory = "2"
 
@@ -51,14 +51,14 @@ resource "azurerm_container_group" "master" {
 resource "azurerm_container_group" "worker" {
   count               = var.locustWorkerNodes
   name                = "${random_pet.deployment.id}-locust-worker-${count.index}"
-  location            = var.locust_worker_locations[count.index % length(var.locust_worker_locations)]
+  location            = var.locustWorkerLocations[count.index % length(var.locustWorkerLocations)]
   resource_group_name = azurerm_resource_group.deployment.name
   ip_address_type     = "Public"
   os_type             = "Linux"
 
   container {
     name   = "${random_pet.deployment.id}-worker-${count.index}"
-    image  = var.locust_version
+    image  = var.locustVersion
     cpu    = "2"
     memory = "2"
 

@@ -10,7 +10,7 @@ variable "environment" {
   default     = "dev"
 }
 
-variable "locust_version" {
+variable "locustVersion" {
   description = "Locust Container Image Version"
   type        = string
   default     = "locustio/locust:1.4.3"
@@ -28,7 +28,7 @@ variable "locustWorkerNodes" {
   default     = "0"
 }
 
-variable "locust_worker_locations" {
+variable "locustWorkerLocations" {
   description = "List of regions to deploy workers to in round robin fashion"
   type        = list
   default     = ["northeurope", "eastus2", "westeurope", "westus", "australiaeast", "francecentral", "southcentralus", "japaneast", "southindia", "brazilsouth", "germanywestcentral", "uksouth", "canadacentral", "eastus2", "uaenorth"]
