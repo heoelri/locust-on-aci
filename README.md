@@ -1,12 +1,12 @@
-# locust-on-aci
-Load testing with Locust using Azure Container Instances (ACI)
+# Locust on Azure Container Instances (ACI)
+Load testing with [Locust](https://locust.io) using Azure Container Instances (ACI). This repository contains sample implementations in Terraform how to deploy and run load tests with Locust.
 
 ## Locust deployment via Terraform
 
-This repository contains two Terraform definitions to deploy Locust:
+This repository contains two different Terraform definitions to deploy Locust:
 
-* [headless](./src/headless/infra) - fully automated without a webui
-* [webui](./src/testing/infra) - partially automated with a webui
+* [headless](./src/headless/infra) - To conduct fully automated load tests without a user interface triggered via a GitHub workflow.
+* [webui](./src/testing/infra) - To deploy a load testing infrastructure with multiple worker nodes and a webui to conduct and monitor tests.
 
 ## Locust deployment pipelines
 
@@ -25,3 +25,5 @@ The workflow will then, based on your selection, deploy the required infrastruct
 ### WebUI
 
 The "webui" workflow spins up a full Locust deployment with the selected number of worker nodes. You can run the same pipeline again to scale the infrastructure down.
+
+![locust webui architecture overview](img/locust-webui-architecture.png)
