@@ -10,7 +10,7 @@ variable "environment" {
   default     = "dev"
 }
 
-variable "locust_version" {
+variable "locustVersion" {
   description = "Locust Container Image Version"
   type        = string
   default     = "locustio/locust:1.4.3"

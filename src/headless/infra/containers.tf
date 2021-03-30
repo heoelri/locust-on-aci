@@ -9,7 +9,7 @@ resource "azurerm_container_group" "master" {
 
   container {
     name   = "${random_pet.deployment.id}-locust-master"
-    image  = var.locust_version
+    image  = var.locustVersion
     cpu    = "2"
     memory = "2"
 
@@ -65,7 +65,7 @@ resource "azurerm_container_group" "worker" {
 
   container {
     name   = "${random_pet.deployment.id}-worker-${count.index}"
-    image  = var.locust_version
+    image  = var.locustVersion
     cpu    = "2"
     memory = "2"
 
