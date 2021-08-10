@@ -13,7 +13,7 @@ variable "environment" {
 variable "locust_container_image" {
   description = "Locust Container Image"
   type        = string
-  default     = "sebader/locust-with-plugins:latest"
+  default     = "sebader/locust-with-plugins:latest" # customized locust image with application insights support instead of locustio/locust via https://github.com/sebader/locust-with-plugins
 }
 
 variable "locustSpawnRate" {
