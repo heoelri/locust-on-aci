@@ -31,7 +31,37 @@ variable "locustWorkerNodes" {
 variable "locustWorkerLocations" {
   description = "List of regions to deploy workers to in round robin fashion"
   type        = list(any)
-  default     = ["northeurope", "eastus2", "westeurope", "westus", "australiaeast", "francecentral", "southcentralus", "japaneast", "southindia", "brazilsouth", "germanywestcentral", "uksouth", "canadacentral", "eastus2", "uaenorth"]
+  default = [
+    "northeurope",
+    "eastus2",
+    "southeastasia",
+    "westeurope",
+    "westus",
+    "australiaeast",
+    "francecentral",
+    "southcentralus",
+    "japaneast",
+    "southindia",
+    "brazilsouth",
+    "germanywestcentral",
+    "uksouth",
+    "canadacentral",
+    "eastus",
+    "uaenorth",
+    "koreacentral",
+    "eastasia",
+    "australiasoutheast",
+    "canadaeast",
+    "centralindia",
+    "japanwest",
+    "norwayeast",
+    "switzerlandnorth",
+    "ukwest",
+    "centralus",
+    "northcentralus",
+    "westcentralus",
+    "westus2"
+  ]
 }
 
 variable "prefix" {
