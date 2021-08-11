@@ -10,10 +10,10 @@ variable "environment" {
   default     = "dev"
 }
 
-variable "locustVersion" {
-  description = "Locust Container Image Version"
+variable "locust_container_image" {
+  description = "Locust Container Image"
   type        = string
-  default     = "locustio/locust:1.4.3"
+  default     = "sebader/locust-with-plugins:latest"
 }
 
 variable "targeturl" {
@@ -30,12 +30,12 @@ variable "locustWorkerNodes" {
 
 variable "locustWorkerLocations" {
   description = "List of regions to deploy workers to in round robin fashion"
-  type        = list
+  type        = list(any)
   default     = ["northeurope", "eastus2", "westeurope", "westus", "australiaeast", "francecentral", "southcentralus", "japaneast", "southindia", "brazilsouth", "germanywestcentral", "uksouth", "canadacentral", "eastus2", "uaenorth"]
 }
 
 variable "prefix" {
-  description = "A prefix used for all resources in this example. Must not contain any special characters. Must not be longer than 10 characters."
+  description = "A prefix used for the resource group. Must not contain any special characters. Must not be longer than 10 characters."
   type        = string
   validation {
     condition     = length(var.prefix) >= 5 && length(var.prefix) <= 10

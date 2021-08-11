@@ -10,10 +10,10 @@ variable "environment" {
   default     = "dev"
 }
 
-variable "locustVersion" {
-  description = "Locust Container Image Version"
+variable "locust_container_image" {
+  description = "Locust Container Image"
   type        = string
-  default     = "locustio/locust:1.4.3"
+  default     = "sebader/locust-with-plugins:latest" # customized locust image with application insights support instead of locustio/locust via https://github.com/sebader/locust-with-plugins
 }
 
 variable "locustSpawnRate" {
@@ -48,7 +48,7 @@ variable "locustWorkerNodes" {
 
 variable "locustWorkerLocations" {
   description = "List of regions to deploy workers to in round robin fashion"
-  type        = list
+  type        = list(any)
   default     = ["northeurope", "eastus2", "westeurope", "westus", "australiaeast", "francecentral", "southcentralus", "japaneast", "southindia", "brazilsouth", "germanywestcentral", "uksouth", "canadacentral", "eastus2", "uaenorth"]
 }
 

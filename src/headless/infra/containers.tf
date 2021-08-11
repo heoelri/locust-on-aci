@@ -9,50 +9,46 @@ resource "azurerm_container_group" "master" {
 
   container {
     name   = "${random_pet.deployment.id}-locust-master"
-    image  = var.locustVersion
+    image  = var.locust_container_image
     cpu    = "2"
     memory = "2"
 
     commands = [
-        "locust",
-        "--locustfile",
-        "/home/locust/locust/${azurerm_storage_share_file.locustfile.name}",
-        "--master", 
-        "--headless", # running headless
-        "--expect-workers",
-        var.locustWorkerNodes,
-        "--host",
-        var.locustTargetUrl,
-        "--csv",
-        "locust/stats/${var.githubRunId}",
-        "--csv-full-history",
-        "--users",
-        var.locustNumUsers,
-        "--spawn-rate",
-        var.locustSpawnRate,
-        "--run-time",
-        "${var.locustRunTime}m",
-        "--logfile",
-        "/home/locust/locust/logs/${var.githubRunId}.log"
+      "locust"
     ]
 
-    volume {
-        name = "locust"
-        mount_path = "/home/locust/locust"
+    environment_variables = {
+      "LOCUST_LOCUSTFILE"              = "/home/locust/locust/${azurerm_storage_share_file.locustfile.name}",
+      "LOCUST_HOST"                    = var.locustTargetUrl,
+      "LOCUST_MODE_MASTER"             = "true" # running headless
+      "LOCUST_HEADLESS"                = "true"
+      "LOCUST_EXPECT_WORKERS"          = var.locustWorkerNodes
+      "LOCUST_USERS"                   = var.locustNumUsers
+      "LOCUST_SPAWN_RATE"              = var.locustSpawnRate
+      "LOCUST_RUN_TIME"                = "${var.locustRunTime}m"
+      "LOCUST_LOGFILE"                 = "/home/locust/locust/logs/${var.githubRunId}.log"
+      "LOCUST_CSV_FULL_HISTORY"        = "true"
+      "LOCUST_CSV"                     = "locust/stats/${var.githubRunId}"
+      "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.deployment.instrumentation_key
+    }
 
-        storage_account_key  = azurerm_storage_account.deployment.primary_access_key
-        storage_account_name = azurerm_storage_account.deployment.name
-        share_name           = azurerm_storage_share.locust.name
+    volume {
+      name       = "locust"
+      mount_path = "/home/locust/locust"
+
+      storage_account_key  = azurerm_storage_account.deployment.primary_access_key
+      storage_account_name = azurerm_storage_account.deployment.name
+      share_name           = azurerm_storage_share.locust.name
     }
 
     ports {
       port     = "5557"
-      protocol = "TCP" 
+      protocol = "TCP"
     }
 
   }
 
-  tags     = local.default_tags
+  tags = local.default_tags
 }
 
 resource "azurerm_container_group" "worker" {
@@ -65,26 +61,28 @@ resource "azurerm_container_group" "worker" {
 
   container {
     name   = "${random_pet.deployment.id}-worker-${count.index}"
-    image  = var.locustVersion
+    image  = var.locust_container_image
     cpu    = "2"
     memory = "2"
 
     commands = [
-        "locust",
-        "--locustfile",
-        "/home/locust/locust/${azurerm_storage_share_file.locustfile.name}",
-        "--worker",
-        "--master-host",
-        azurerm_container_group.master[0].fqdn
+      "locust"
     ]
 
-    volume {
-        name = "locust"
-        mount_path = "/home/locust/locust"
+    environment_variables = {
+      "LOCUST_LOCUSTFILE"              = "/home/locust/locust/${azurerm_storage_share_file.locustfile.name}",
+      "LOCUST_MASTER_NODE_HOST"        = azurerm_container_group.master[0].fqdn,
+      "LOCUST_MODE_WORKER"             = "true"
+      "APPINSIGHTS_INSTRUMENTATIONKEY" = azurerm_application_insights.deployment.instrumentation_key
+    }
 
-        storage_account_key  = azurerm_storage_account.deployment.primary_access_key
-        storage_account_name = azurerm_storage_account.deployment.name
-        share_name           = azurerm_storage_share.locust.name
+    volume {
+      name       = "locust"
+      mount_path = "/home/locust/locust"
+
+      storage_account_key  = azurerm_storage_account.deployment.primary_access_key
+      storage_account_name = azurerm_storage_account.deployment.name
+      share_name           = azurerm_storage_share.locust.name
     }
 
     ports {
@@ -94,5 +92,5 @@ resource "azurerm_container_group" "worker" {
 
   }
 
-  tags     = local.default_tags
+  tags = local.default_tags
 }
